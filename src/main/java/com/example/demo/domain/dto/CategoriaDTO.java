@@ -1,13 +1,18 @@
 package com.example.demo.domain.dto;
 
 import com.example.demo.domain.Categoria;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.NotEmpty;
 
 public class CategoriaDTO implements Serializable {
 
     private Integer id;
+
+    @NotEmpty(message = "Preenchimento obrgatorio")
+    @Length(min = 5, max = 80)
     private String name;
 
     public CategoriaDTO(){}
