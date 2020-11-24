@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -30,6 +31,10 @@ public class CategoriaService {
     public Categoria update(Categoria obj){
         find(obj.getId());
         return repository.save(obj);
+    }
+
+    public List<Categoria> findAll(){
+        return repository.findAll();
     }
 
     public void delete(Integer id){
