@@ -3,10 +3,12 @@ package com.example.demo.resouces;
 import com.example.demo.domain.Cliente;
 import com.example.demo.domain.Cliente;
 import com.example.demo.domain.dto.ClienteDTO;
+import com.example.demo.domain.dto.ClienteNewDTO;
 import com.example.demo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -29,9 +31,9 @@ public class ClienteResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> insert(@Valid @RequestBody ClienteDTO objDto){
+    public ResponseEntity<?> insert(@Valid @RequestBody ClienteNewDTO objDto){
         Cliente obj = service.fromDTO(objDto);
-        obj = service.insert(obj);
+        //obj = service.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }

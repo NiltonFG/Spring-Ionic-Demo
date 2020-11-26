@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.domain.Categoria;
+import com.example.demo.domain.Cliente;
 import com.example.demo.domain.dto.CategoriaDTO;
 import com.example.demo.repositories.CategoriaRepository;
 import com.example.demo.services.exception.DataIntegrityException;
@@ -33,8 +34,13 @@ public class CategoriaService {
     }
 
     public Categoria update(Categoria obj){
-        find(obj.getId());
-        return repository.save(obj);
+        Categoria newObj = find(obj.getId());
+        updateData(newObj, obj);
+        return repository.save(newObj);
+    }
+
+    private void updateData(Categoria newObj, Categoria obj){
+        newObj.setName(obj.getName());
     }
 
     public List<Categoria> findAll(){
