@@ -1,11 +1,23 @@
 package com.example.demo.domain.dto;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+
 
 public class ClienteNewDTO implements Serializable {
 
+    @NotEmpty
+    @Length(min = 5, max = 120)
     private String nome;
+
+    @NotEmpty
+    @Email
     private String email;
+
+    @NotEmpty
     private String cpfOuCnpj;
     private Integer tipo;
 
@@ -13,8 +25,11 @@ public class ClienteNewDTO implements Serializable {
     private String numero;
     private String complemento;
     private String bairro;
+
+    @NotEmpty
     private String cep;
 
+    @NotEmpty
     private String telefone1;
     private String telefone2;
     private String telefone3;
