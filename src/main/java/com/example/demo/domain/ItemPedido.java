@@ -3,10 +3,8 @@ package com.example.demo.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -30,6 +28,10 @@ public class ItemPedido implements Serializable {
         this.desconto = desconto;
         this.quantidade = quantidade;
         this.preco = preco;
+    }
+
+    public double getSubtotal(){
+        return (preco - desconto) * quantidade ;
     }
 
     public ItemPedidoPK getId() {
@@ -71,6 +73,14 @@ public class ItemPedido implements Serializable {
     @JsonIgnore
     public Pedido getPedido(){
         return id.getPedido();
+    }
+
+    public void setProduto(Produto produto){
+        id.setProduto(produto);
+    }
+
+    public void setPedido(Pedido pedido){
+        id.setPedido(pedido);
     }
 
     @Override
