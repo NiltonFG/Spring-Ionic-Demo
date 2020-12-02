@@ -4,6 +4,7 @@ import com.example.demo.domain.ItemPedido;
 import com.example.demo.domain.PagamentoBoleto;
 import com.example.demo.domain.Pedido;
 import com.example.demo.domain.enums.EstadoPagamento;
+import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.repositories.ItemPedidoRepository;
 import com.example.demo.repositories.PagamentoRepository;
 import com.example.demo.repositories.PedidoRepository;
@@ -33,6 +34,9 @@ public class PedidoService {
     @Autowired
     private ItemPedidoRepository itemPedidoRepository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     public Pedido find(Integer id) {
         Optional<Pedido> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -43,6 +47,7 @@ public class PedidoService {
     public Pedido insert(Pedido obj){
          obj.setId(null);
          obj.setInstantes(new Date());
+         obj.setCliente(clienteRepository.findById(obj.getCliente().getId());
          obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
          if(obj.getPagamento() instanceof PagamentoBoleto){
              PagamentoBoleto pgto =(PagamentoBoleto)obj.getPagamento();
@@ -52,10 +57,12 @@ public class PedidoService {
          pagamentoRepository.save(obj.getPagamento());
         for (ItemPedido x : obj.getItens()) {
             x.setDesconto(0.00);
-            x.setPreco(produtoService.find(x.getProduto().getId()).getPreco());
+            x.setProduto(produtoService.find(x.getProduto().getId()));
+            x.setPreco(x.getProduto().getPreco());
             x.setPedido(obj);
         }
         itemPedidoRepository.saveAll(obj.getItens());
+        System.out.println(obj);
         return obj;
 
     }
