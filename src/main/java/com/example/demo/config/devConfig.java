@@ -4,6 +4,8 @@ import com.example.demo.domain.*;
 import com.example.demo.domain.enums.EstadoPagamento;
 import com.example.demo.domain.enums.TipoCLiente;
 import com.example.demo.repositories.*;
+import com.example.demo.services.EmailService;
+import com.example.demo.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -133,6 +135,11 @@ public class devConfig {
 
         itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
         return  true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 
 }
