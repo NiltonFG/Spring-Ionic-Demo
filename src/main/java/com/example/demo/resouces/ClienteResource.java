@@ -1,14 +1,13 @@
 package com.example.demo.resouces;
 
 import com.example.demo.domain.Cliente;
-import com.example.demo.domain.Cliente;
 import com.example.demo.domain.dto.ClienteDTO;
 import com.example.demo.domain.dto.ClienteNewDTO;
 import com.example.demo.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -46,12 +45,14 @@ public class ClienteResource {
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<ClienteDTO>> findAll(){
         List<Cliente> list = service.findAll() ;
@@ -59,6 +60,7 @@ public class ClienteResource {
         return ResponseEntity.ok().body(dtoList);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/page",method = RequestMethod.GET)
     public ResponseEntity<Page<ClienteDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,

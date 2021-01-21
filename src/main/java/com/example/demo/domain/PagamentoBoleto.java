@@ -1,7 +1,6 @@
 package com.example.demo.domain;
 
 import com.example.demo.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;

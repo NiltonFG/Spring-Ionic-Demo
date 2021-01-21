@@ -1,7 +1,6 @@
 package com.example.demo.resouces;
 
 import com.example.demo.domain.Produto;
-import com.example.demo.domain.Produto;
 import com.example.demo.domain.dto.ProdutoDTO;
 import com.example.demo.resouces.utils.URL;
 import com.example.demo.services.ProdutoService;

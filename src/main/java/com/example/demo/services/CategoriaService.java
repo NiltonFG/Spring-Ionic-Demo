@@ -1,7 +1,6 @@
 package com.example.demo.services;
 
 import com.example.demo.domain.Categoria;
-import com.example.demo.domain.Cliente;
 import com.example.demo.domain.dto.CategoriaDTO;
 import com.example.demo.repositories.CategoriaRepository;
 import com.example.demo.services.exception.DataIntegrityException;

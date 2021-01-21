@@ -33,7 +33,7 @@ public class ItemPedido implements Serializable {
     }
 
     public double getSubtotal(){
-        return (preco - desconto) * quantidade ;
+        return (preco - desconto) * quantidade; // pesquisa de Big decimal
     }
 
     public ItemPedidoPK getId() {

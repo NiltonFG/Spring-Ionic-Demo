@@ -3,9 +3,9 @@ package com.example.demo.domain.dto;
 import com.example.demo.domain.Categoria;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.validation.constraints.NotEmpty;
 
 public class CategoriaDTO implements Serializable {
 

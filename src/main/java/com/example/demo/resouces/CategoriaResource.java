@@ -6,6 +6,7 @@ import com.example.demo.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,6 +28,7 @@ public class CategoriaResource{
         return ResponseEntity.ok().body(obj);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> insert(@Valid @RequestBody CategoriaDTO objDto){
         Categoria obj = service.fromDTO(objDto);
@@ -35,6 +37,7 @@ public class CategoriaResource{
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
     public ResponseEntity<?> update(@Valid @RequestBody CategoriaDTO objDTO, @PathVariable Integer id){
         objDTO.setId(id);
@@ -43,6 +46,7 @@ public class CategoriaResource{
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         service.delete(id);
@@ -52,7 +56,7 @@ public class CategoriaResource{
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<CategoriaDTO>> findAll(){
         List<Categoria> list = service.findAll() ;
-        List<CategoriaDTO> dtoList = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+        List<CategoriaDTO> dtoList = list.stream().map(CategoriaDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(dtoList);
     }
 
@@ -63,7 +67,7 @@ public class CategoriaResource{
             @RequestParam(value = "order", defaultValue = "nome") String orderBy,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction){
         Page<Categoria> list = service.findPage(page,linesPerPage,orderBy,direction);
-        Page<CategoriaDTO> dtoList = list.map(obj -> new CategoriaDTO(obj));
+        Page<CategoriaDTO> dtoList = list.map(CategoriaDTO::new);
         return ResponseEntity.ok().body(dtoList);
     }
 }

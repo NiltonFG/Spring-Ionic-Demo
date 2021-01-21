@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,6 +46,9 @@ public class devConfig {
     private PagamentoRepository pagamentoRepository;
 
     @Autowired ItemPedidoRepository itemPedidoRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String strategy;
@@ -91,7 +95,7 @@ public class devConfig {
         estadoRepository.saveAll(Arrays.asList(est1,est2));
         cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva","maria@gmail.com","11122121222", TipoCLiente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva","maria@gmail.com","11122121222", TipoCLiente.PESSOAFISICA,null);
         cli1.getTelefones().addAll(Arrays.asList("555979797","1542365478"));
 
         Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 231","Jardim","4444444",cid2,cli1);

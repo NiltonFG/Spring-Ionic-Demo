@@ -1,15 +1,16 @@
 package com.example.demo.services;
 
-import com.example.demo.domain.Categoria;
 import com.example.demo.domain.Cidade;
 import com.example.demo.domain.Cliente;
 import com.example.demo.domain.Endereco;
 import com.example.demo.domain.dto.ClienteDTO;
 import com.example.demo.domain.dto.ClienteNewDTO;
+import com.example.demo.domain.enums.Perfil;
 import com.example.demo.domain.enums.TipoCLiente;
-import com.example.demo.repositories.CidadeRepository;
 import com.example.demo.repositories.ClienteRepository;
 import com.example.demo.repositories.EnderecoRepository;
+import com.example.demo.security.UserSS;
+import com.example.demo.services.exception.AuthorizationException;
 import com.example.demo.services.exception.DataIntegrityException;
 import com.example.demo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,14 @@ public class ClienteService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public Cliente find(Integer id) {
+        UserSS user = UserService.authenticated();
+        if(user == null || user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())){
+            throw new AuthorizationException("Acesso negado");
+        }
         Optional<Cliente> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
@@ -69,11 +77,11 @@ public class ClienteService {
     }
 
    public Cliente fromDTO(ClienteDTO objDTO){
-        return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null,null);
+        return new Cliente(objDTO.getId(), objDTO.getNome(), objDTO.getEmail(), null,null,null);
     }
 
     public Cliente fromDTO(ClienteNewDTO objDTO){
-        Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCLiente.toEnum(objDTO.getTipo()));
+        Cliente cli = new Cliente(null, objDTO.getNome(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), TipoCLiente.toEnum(objDTO.getTipo()),bCryptPasswordEncoder.encode(objDTO.getSenha()));
         Cidade ci = new Cidade(objDTO.getCidadeId(),null ,null);
         Endereco endereco = new Endereco(null,objDTO.getLogradouro(), objDTO.getNumero(),objDTO.getComplemento(),objDTO.getBairro(), objDTO.getCep(),ci,cli);
         cli.getEnderecos().add(endereco);
