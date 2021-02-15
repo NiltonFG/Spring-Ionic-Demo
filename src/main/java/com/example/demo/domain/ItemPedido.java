@@ -21,10 +21,10 @@ public class ItemPedido implements Serializable {
     private Integer quantidade;
     private Double preco;
 
-    public ItemPedido(){
+    public ItemPedido() {
     }
 
-    public ItemPedido(Pedido pedido,Produto produto, Double desconto, Integer quantidade, Double preco) {
+    public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade, Double preco) {
         this.id.setPedido(pedido);
         this.id.setProduto(produto);
         this.desconto = desconto;
@@ -32,7 +32,7 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
-    public double getSubtotal(){
+    public double getSubtotal() {
         return (preco - desconto) * quantidade; // pesquisa de Big decimal
     }
 
@@ -68,20 +68,20 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
-    public Produto getProduto(){
+    public Produto getProduto() {
         return id.getProduto();
     }
 
     @JsonIgnore
-    public Pedido getPedido(){
+    public Pedido getPedido() {
         return id.getPedido();
     }
 
-    public void setProduto(Produto produto){
+    public void setProduto(Produto produto) {
         id.setProduto(produto);
     }
 
-    public void setPedido(Pedido pedido){
+    public void setPedido(Pedido pedido) {
         id.setPedido(pedido);
     }
 
@@ -100,7 +100,7 @@ public class ItemPedido implements Serializable {
 
     @Override
     public String toString() {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         final StringBuffer sb = new StringBuffer("ItemPedido{");
         sb.append(getProduto().getNome());
         sb.append(",quantidade: ");

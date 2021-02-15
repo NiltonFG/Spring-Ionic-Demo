@@ -25,7 +25,7 @@ public class Cliente implements Serializable {
     @JsonIgnore
     private String senha;
 
-    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
@@ -49,7 +49,7 @@ public class Cliente implements Serializable {
         return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void addPerfil(Perfil perfil){
+    public void addPerfil(Perfil perfil) {
         perfis.add(perfil.getCod());
     }
 
@@ -73,13 +73,13 @@ public class Cliente implements Serializable {
         addPerfil(Perfil.CLIENTE);
     }
 
-    public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCLiente tipo,String senha) {
+    public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCLiente tipo, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpfOuCnpj = cpfOuCnpj;
         this.senha = senha;
-        this.tipo = (tipo == null)? null : tipo.getCod();
+        this.tipo = (tipo == null) ? null : tipo.getCod();
         addPerfil(Perfil.CLIENTE);
     }
 

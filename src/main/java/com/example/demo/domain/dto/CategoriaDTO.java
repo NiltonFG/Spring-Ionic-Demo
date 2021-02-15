@@ -15,7 +15,8 @@ public class CategoriaDTO implements Serializable {
     @Length(min = 5, max = 80)
     private String name;
 
-    public CategoriaDTO(){}
+    public CategoriaDTO() {
+    }
 
     public CategoriaDTO(Categoria categoria) {
         this.id = categoria.getId();

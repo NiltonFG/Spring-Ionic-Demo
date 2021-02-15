@@ -27,13 +27,13 @@ public abstract class AbstractEmailService implements EmailService {
     private JavaMailSender javaMailSender;
 
     @Override
-    public void sendOrderConfirmationEmail(Pedido obj){
+    public void sendOrderConfirmationEmail(Pedido obj) {
         SimpleMailMessage msg;
         msg = prepareSimpleMailMenssageFromPedido(obj);
         sendEmail(msg);
     }
 
-    private SimpleMailMessage prepareSimpleMailMenssageFromPedido(Pedido pedido){
+    private SimpleMailMessage prepareSimpleMailMenssageFromPedido(Pedido pedido) {
         SimpleMailMessage sm = new SimpleMailMessage();
         sm.setTo(pedido.getCliente().getEmail());
         sm.setFrom(sender);
@@ -43,14 +43,14 @@ public abstract class AbstractEmailService implements EmailService {
         return sm;
     }
 
-    protected String htmlFromTemplatePedido(Pedido obj){
+    protected String htmlFromTemplatePedido(Pedido obj) {
         Context context = new Context();
-        context.setVariable("pedido",obj);
-        return templateEngine.process("Email/confirmacaoPedido",context);
+        context.setVariable("pedido", obj);
+        return templateEngine.process("Email/confirmacaoPedido", context);
     }
 
     @Override
-    public void sendOrderConfirmationHtmlEmail(Pedido obj){
+    public void sendOrderConfirmationHtmlEmail(Pedido obj) {
         MimeMessage msg;
         try {
             msg = prepareMimeMailMenssageFromPedido(obj);
@@ -62,19 +62,19 @@ public abstract class AbstractEmailService implements EmailService {
 
     protected MimeMessage prepareMimeMailMenssageFromPedido(Pedido obj) throws MessagingException {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage,true);
+        MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
         mmh.setTo(obj.getCliente().getEmail());
         mmh.setFrom(sender);
         mmh.setSubject("Envio confirmado! Código:" + obj.getId());
         mmh.setSentDate(new Date(System.currentTimeMillis()));
-        mmh.setText(htmlFromTemplatePedido(obj),true);
+        mmh.setText(htmlFromTemplatePedido(obj), true);
         return mimeMessage;
     }
 
     @Override
     public void sendNewPassword(Cliente cliente, String newPass) {
         SimpleMailMessage msg;
-        msg = prepareSimpleMailMenssageFromNewPassword(cliente,newPass);
+        msg = prepareSimpleMailMenssageFromNewPassword(cliente, newPass);
         sendEmail(msg);
     }
 

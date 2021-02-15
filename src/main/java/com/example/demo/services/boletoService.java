@@ -8,10 +8,10 @@ import java.util.Date;
 
 @Service
 public class boletoService {
-    public void preencherPagamentoBoleto(PagamentoBoleto pagto, Date instantePedido){
+    public void preencherPagamentoBoleto(PagamentoBoleto pagto, Date instantePedido) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(instantePedido);
-        cal.add(Calendar.DAY_OF_MONTH,7);
+        cal.add(Calendar.DAY_OF_MONTH, 7);
         pagto.setDataVencimento(cal.getTime());
     }
 

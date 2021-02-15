@@ -1,8 +1,8 @@
 package com.example.demo.domain.enums;
 
 public enum Perfil {
-    ADMIN(1,"ROLE_ADMIN"),
-    CLIENTE(2,"ROLE_CLIENTE");
+    ADMIN(1, "ROLE_ADMIN"),
+    CLIENTE(2, "ROLE_CLIENTE");
 
     private int cod;
     private String descricao;
@@ -20,13 +20,13 @@ public enum Perfil {
         return descricao;
     }
 
-    public static Perfil toEnum(Integer cod){
-        if(cod == null)
+    public static Perfil toEnum(Integer cod) {
+        if (cod == null)
             return null;
-        for (Perfil x: Perfil.values()) {
-            if(cod.equals(x.getCod()))
+        for (Perfil x : Perfil.values()) {
+            if (cod.equals(x.getCod()))
                 return x;
         }
-        throw new IllegalArgumentException("Id inválido: "+ cod);
+        throw new IllegalArgumentException("Id inválido: " + cod);
     }
 }

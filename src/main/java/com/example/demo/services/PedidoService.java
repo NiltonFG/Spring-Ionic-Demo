@@ -1,6 +1,9 @@
 package com.example.demo.services;
 
-import com.example.demo.domain.*;
+import com.example.demo.domain.Cliente;
+import com.example.demo.domain.ItemPedido;
+import com.example.demo.domain.PagamentoBoleto;
+import com.example.demo.domain.Pedido;
 import com.example.demo.domain.enums.EstadoPagamento;
 import com.example.demo.repositories.ItemPedidoRepository;
 import com.example.demo.repositories.PagamentoRepository;
@@ -49,17 +52,17 @@ public class PedidoService {
     }
 
     @Transactional
-    public Pedido insert(Pedido obj){
-         obj.setId(null);
-         obj.setInstantes(new Date());
-         obj.setCliente(clienteService.find(obj.getCliente().getId()));
-         obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
-         if(obj.getPagamento() instanceof PagamentoBoleto){
-             PagamentoBoleto pgto =(PagamentoBoleto)obj.getPagamento();
-             boletoService.preencherPagamentoBoleto(pgto,obj.getInstantes());
-         }
-         obj = repository.save(obj);
-         pagamentoRepository.save(obj.getPagamento());
+    public Pedido insert(Pedido obj) {
+        obj.setId(null);
+        obj.setInstantes(new Date());
+        obj.setCliente(clienteService.find(obj.getCliente().getId()));
+        obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
+        if (obj.getPagamento() instanceof PagamentoBoleto) {
+            PagamentoBoleto pgto = (PagamentoBoleto) obj.getPagamento();
+            boletoService.preencherPagamentoBoleto(pgto, obj.getInstantes());
+        }
+        obj = repository.save(obj);
+        pagamentoRepository.save(obj.getPagamento());
         for (ItemPedido x : obj.getItens()) {
             x.setDesconto(0.00);
             x.setProduto(produtoService.find(x.getProduto().getId()));
@@ -71,13 +74,13 @@ public class PedidoService {
         return obj;
     }
 
-    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+    public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         UserSS user = UserService.authenticated();
-        if(user == null){
+        if (user == null) {
             throw new AuthorizationException("Acesso negado");
         }
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction),orderBy);
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         Cliente cliente = clienteService.find(user.getId());
-        return repository.findByCliente(cliente,pageRequest);
+        return repository.findByCliente(cliente, pageRequest);
     }
 }

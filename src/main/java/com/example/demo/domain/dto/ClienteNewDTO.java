@@ -39,7 +39,8 @@ public class ClienteNewDTO implements Serializable {
     @NotEmpty
     private String senha;
 
-    public ClienteNewDTO(){}
+    public ClienteNewDTO() {
+    }
 
     public String getSenha() {
         return senha;

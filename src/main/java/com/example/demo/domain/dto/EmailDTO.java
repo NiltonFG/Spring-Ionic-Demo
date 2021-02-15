@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
-public class EmailDTO implements Serializable{
+public class EmailDTO implements Serializable {
 
     @Email
     @NotEmpty
@@ -14,7 +14,7 @@ public class EmailDTO implements Serializable{
         this.email = email;
     }
 
-    public EmailDTO(){
+    public EmailDTO() {
     }
 
     public String getEmail() {

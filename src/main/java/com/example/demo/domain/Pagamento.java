@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME,include = JsonTypeInfo.As.PROPERTY,property = "@type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 
     @Id
@@ -23,7 +23,9 @@ public abstract class Pagamento implements Serializable {
     @JsonIgnore
     private Pedido pedido;
 
-    public Pagamento(){}
+    public Pagamento() {
+    }
+
     public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
         this.id = id;
         this.estado = (estado == null) ? null : estado.getCod();

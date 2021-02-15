@@ -9,7 +9,8 @@ public class ProdutoDTO implements Serializable {
     private String nome;
     private Double preco;
 
-    public ProdutoDTO(){}
+    public ProdutoDTO() {
+    }
 
     public ProdutoDTO(Produto obj) {
         this.id = obj.getId();

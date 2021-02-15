@@ -1,9 +1,9 @@
 package com.example.demo.domain.enums;
 
-public enum EstadoPagamento{
-    PENDENTE(1,"pendente"),
-    QUITADO(2,"quitado"),
-    CANCELADO(3,"cancelado");
+public enum EstadoPagamento {
+    PENDENTE(1, "pendente"),
+    QUITADO(2, "quitado"),
+    CANCELADO(3, "cancelado");
 
     private int cod;
     private String descricao;
@@ -21,13 +21,13 @@ public enum EstadoPagamento{
         return descricao;
     }
 
-    public static EstadoPagamento toEnum(Integer cod){
-        if(cod == null)
+    public static EstadoPagamento toEnum(Integer cod) {
+        if (cod == null)
             return null;
-        for (EstadoPagamento x: EstadoPagamento.values()) {
-            if(cod.equals(x.getCod()))
+        for (EstadoPagamento x : EstadoPagamento.values()) {
+            if (cod.equals(x.getCod()))
                 return x;
         }
-        throw new IllegalArgumentException("Id inválido: "+ cod);
+        throw new IllegalArgumentException("Id inválido: " + cod);
     }
 }

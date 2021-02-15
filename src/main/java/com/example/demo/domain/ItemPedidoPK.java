@@ -41,6 +41,7 @@ public class ItemPedidoPK implements Serializable {
         return Objects.equals(pedido, that.pedido) &&
                 Objects.equals(produto, that.produto);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(pedido, produto);

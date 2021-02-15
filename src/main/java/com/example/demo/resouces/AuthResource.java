@@ -27,15 +27,16 @@ public class AuthResource {
 
     // Renova o token para o usuário
     @RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
-    public ResponseEntity<Void> refreshToken(HttpServletResponse response){
+    public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
         UserSS user = UserService.authenticated();
         String token = jwtUtil.generateToken(user.getUsername());
-        response.addHeader("Authentication","Bearer" + token);
+        response.addHeader("Authentication", "Bearer" + token);
+        response.addHeader("acess-control-expose-headers","Authorization");
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value = "/forgot", method = RequestMethod.POST)
-    public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO emailDTO){
+    public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO emailDTO) {
         service.sendNewPassword(emailDTO.getEmail());
         return ResponseEntity.noContent().build();
     }

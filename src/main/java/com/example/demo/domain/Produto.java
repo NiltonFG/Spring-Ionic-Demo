@@ -37,9 +37,9 @@ public class Produto implements Serializable {
     }
 
     @JsonIgnore
-    public List<Pedido> getPedidos(){
+    public List<Pedido> getPedidos() {
         List<Pedido> list = new ArrayList<>();
-        for (ItemPedido x: itens) {
+        for (ItemPedido x : itens) {
             list.add(x.getPedido());
         }
         return list;
@@ -53,7 +53,8 @@ public class Produto implements Serializable {
         this.itens = itens;
     }
 
-    public Produto(){}
+    public Produto() {
+    }
 
     public Integer getId() {
         return id;

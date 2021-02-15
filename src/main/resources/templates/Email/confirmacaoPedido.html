@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:remove="all">Order Confirmation</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
 <div>
@@ -32,9 +32,11 @@
             <td th:text="${item.produto.nome}">nome</td>
             <td th:text="${item.quantidade}">quantidade</td>
             <td th:text="${#numbers.formatDecimal(item.preco, 0, 'POINT', 2,
-'COMMA')}">preco</td>
+'COMMA')}">preco
+            </td>
             <td th:text="${#numbers.formatDecimal(item.subTotal, 0, 'POINT', 2,
-'COMMA')}">subTotal</td>
+'COMMA')}">subTotal
+            </td>
         </tr>
     </table>
     <p>
